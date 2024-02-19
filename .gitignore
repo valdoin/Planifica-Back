@@ -1,0 +1,16 @@
+# Ignore les fichiers de configuration
+*.swp
+*.log
+*.env
+
+# Ignore le répertoire node_modules
+node_modules/
+
+# Ignore les fichiers de sortie de compilation
+dist/
+build/
+out/
+
+# Ignore les fichiers d'installation de dépendances
+package-lock.json
+yarn.lock

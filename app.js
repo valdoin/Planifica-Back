@@ -18,4 +18,4 @@ process.on("unhandledRejection", err => {
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.post('/login', authController.login);
+app.use('/', require("./controllers/routes"));
