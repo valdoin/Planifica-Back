@@ -12,7 +12,7 @@ const createStudent = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
     try {
-        const students = await Student.find();
+        const students = await Student.find().populate('tutor');
         res.send(students);
     } catch (error) {
         res.status(500).send({ error: 'Failed to fetch students', details: error.message });
@@ -21,7 +21,7 @@ const getAllStudents = async (req, res) => {
 
 const getStudentById = async (req, res) => {
     try {
-        const student = await Student.findById(req.params.id);
+        const student = await Student.findById(req.params.id).populate('tutor');
         if (!student) {
             return res.status(404).send({ error: 'Student not found' });
         }

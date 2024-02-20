@@ -12,16 +12,17 @@ const createDefense = async (req, res) => {
 
 const getAllDefenses = async (req, res) => {
     try {
-        const defenses = await Defense.find();
+        const defenses = await Defense.find().populate('student tutor candid');
         res.send(defenses);
     } catch (error) {
         res.status(500).send({ error: 'Failed to fetch defenses', details: error.message });
     }
 };
 
+
 const getDefenseById = async (req, res) => {
     try {
-        const defense = await Defense.findById(req.params.id);
+        const defense = await Defense.findById(req.params.id).populate('student tutor candid');
         if (!defense) {
             return res.status(404).send({ error: 'Defense not found' });
         }
@@ -30,6 +31,7 @@ const getDefenseById = async (req, res) => {
         res.status(500).send({ error: 'Failed to fetch defense', details: error.message });
     }
 };
+
 
 const updateDefense = async (req, res) => {
     const updates = Object.keys(req.body);

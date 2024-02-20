@@ -33,7 +33,7 @@ const getTeacherById = async (req, res) => {
 
 const updateTeacher = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['surname', 'name', 'mail', 'disponibilities'];
+    const allowedUpdates = ['surname', 'name', 'mail', 'disponibilities', 'isProgrammer']; 
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {

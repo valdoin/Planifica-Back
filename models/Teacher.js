@@ -9,12 +9,18 @@ const TeacherSchema = new Mongoose.Schema({
         type: String,
         required: true,
     },
+    isProgrammer: {
+        type: Boolean,
+        required: true,
+    },
     mail: {
         type: String,
         required: true,
     },
     disponibilities: [
-        { type: String }],
+        { type: String }
+    ],
+    
 });
 
 const Teacher = Mongoose.model('Teacher', TeacherSchema);
