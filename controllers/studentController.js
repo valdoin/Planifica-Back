@@ -35,7 +35,7 @@ const getStudentById = async (req, res) => {
 
 const updateStudent = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['surname', 'name', 'class', 'mail', 'tutor', 'disponibilities']; 
+    const allowedUpdates = ['surname', 'name', 'class', 'mail', 'tutor', 'availabilities']; 
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -93,7 +93,7 @@ const sendMailToStudents = async (req, res) => {
             from: 'olivierandriko@gmail.com', 
             to: studentsMails, 
             subject: 'Planification des soutenances', 
-            text: 'Veuillez saisir les disponibilités de votre tuteur en entreprise via ce lien :', 
+            text: 'Veuillez saisir vos disponibilités pour les soutenances via ce lien : localhost:8080/studentGuest', 
         };
 
         await transporter.sendMail(mailOptions);

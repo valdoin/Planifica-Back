@@ -21,10 +21,8 @@ const StudentSchema = new Mongoose.Schema({
         type: Mongoose.Schema.Types.ObjectId,
         ref: 'Teacher',
     },
-    disponibilities: [
-        { type: Date }
-    ],
-})
+    availabilities: [Date],
+});
 
 const Student = Mongoose.model('Student', StudentSchema);
 
