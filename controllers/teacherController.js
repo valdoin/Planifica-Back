@@ -1,4 +1,6 @@
 const Teacher = require('../models/Teacher');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const createTeacher = async (req, res) => {
     try {
@@ -67,10 +69,48 @@ const deleteTeacher = async (req, res) => {
     }
 };
 
+const sendMailToTeachers = async (req, res) => {
+    try {
+        const teachers = await Teacher.find();
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD,
+            },
+            tls: {
+                rejectUnauthorized:false,
+            }
+        });
+
+        const teachersMails = teachers.map(teacher => teacher.mail);
+        
+        const mailOptions = {
+            from: 'olivierandriko@gmail.com', 
+            to: teachersMails, 
+            subject: 'Planification des soutenances', 
+            text: 'Veuillez saisir vos disponibilités pour les soutenances via ce lien :', 
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.send({ message: 'E-mail envoyé à tous les enseignants avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'e-mail aux enseignants', error);
+        res.status(500).send({ error: 'Failed to send email to teachers', details: error.message });
+    }
+};
+
+
 module.exports = {
     createTeacher,
     getAllTeachers,
     getTeacherById,
     updateTeacher,
     deleteTeacher,
+    sendMailToTeachers, 
 };

@@ -18,7 +18,7 @@ const TeacherSchema = new Mongoose.Schema({
         required: true,
     },
     disponibilities: [
-        { type: String }
+        { type: Date }
     ],
     
 });

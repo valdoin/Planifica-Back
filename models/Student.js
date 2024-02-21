@@ -20,7 +20,10 @@ const StudentSchema = new Mongoose.Schema({
     tutor: {
         type: Mongoose.Schema.Types.ObjectId,
         ref: 'Teacher',
-    }
+    },
+    disponibilities: [
+        { type: Date }
+    ],
 })
 
 const Student = Mongoose.model('Student', StudentSchema);

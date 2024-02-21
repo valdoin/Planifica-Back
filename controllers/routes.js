@@ -9,11 +9,12 @@ const defenseController = require("./defenseController");
 router.post('/login', authController.login);
 
 // Routes pour les enseignants
-router.post('/teachers/create', teacherController.createTeacher);
-router.get('/teachers/list', teacherController.getAllTeachers);
-router.get('/teachers/:id/details', teacherController.getTeacherById);
-router.post('/teachers/:id/update', teacherController.updateTeacher);
-router.delete('/teachers/:id/delete', teacherController.deleteTeacher);
+router.post("/teachers/create", teacherController.createTeacher);
+router.get("/teachers/list", teacherController.getAllTeachers);
+router.get("/teachers/:id/details", teacherController.getTeacherById);
+router.post("/teachers/:id/update", teacherController.updateTeacher);
+router.delete("/teachers/:id/delete", teacherController.deleteTeacher);
+router.post("/teachers/send-mails", teacherController.sendMailToTeachers);
 
 // Routes pour les étudiants
 router.post("/students/create", studentController.createStudent);
@@ -21,6 +22,7 @@ router.get("/students/list", studentController.getAllStudents);
 router.get("/students/:id/details", studentController.getStudentById);
 router.post("/students/:id/update", studentController.updateStudent);
 router.delete("/students/:id/delete", studentController.deleteStudent);
+router.post("/students/send-mails", studentController.sendMailToStudents);
 
 // Routes pour les soutenances
 router.post("/defenses/create", defenseController.createDefense);

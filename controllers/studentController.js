@@ -1,4 +1,6 @@
 const Student = require('../models/Student');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
 
 const createStudent = async (req, res) => {
     try {
@@ -33,7 +35,7 @@ const getStudentById = async (req, res) => {
 
 const updateStudent = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['surname', 'name', 'class', 'mail', 'tutor'];
+    const allowedUpdates = ['surname', 'name', 'class', 'mail', 'tutor', 'disponibilities']; 
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
@@ -67,10 +69,47 @@ const deleteStudent = async (req, res) => {
     }
 };
 
+const sendMailToStudents = async (req, res) => {
+    try {
+        const students = await Student.find();
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD,
+            },
+            tls: {
+                rejectUnauthorized:false,
+            }
+        });
+
+        const studentsMails = students.map(student => student.mail);
+        
+        const mailOptions = {
+            from: 'olivierandriko@gmail.com', 
+            to: studentsMails, 
+            subject: 'Planification des soutenances', 
+            text: 'Veuillez saisir les disponibilités de votre tuteur en entreprise via ce lien :', 
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.send({ message: 'E-mail envoyé à tous les étudiants avec succès' });
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi de l\'e-mail aux étudiants', error);
+        res.status(500).send({ error: 'Failed to send email to students', details: error.message });
+    }
+};
+
 module.exports = {
     createStudent,
     getAllStudents,
     getStudentById,
     updateStudent,
     deleteStudent,
+    sendMailToStudents, 
 };
