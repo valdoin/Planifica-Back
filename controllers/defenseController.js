@@ -12,7 +12,7 @@ const createDefense = async (req, res) => {
 
 const getAllDefenses = async (req, res) => {
     try {
-        const defenses = await Defense.find().populate('student tutor candid');
+        const defenses = await Defense.find().populate('student tutor candid group');
         res.send(defenses);
     } catch (error) {
         res.status(500).send({ error: 'Failed to fetch defenses', details: error.message });
@@ -21,7 +21,7 @@ const getAllDefenses = async (req, res) => {
 
 const getDefenseById = async (req, res) => {
     try {
-        const defense = await Defense.findById(req.params.id).populate('student tutor candid');
+        const defense = await Defense.findById(req.params.id).populate('student tutor candid group');
         if (!defense) {
             return res.status(404).send({ error: 'Defense not found' });
         }
@@ -33,7 +33,7 @@ const getDefenseById = async (req, res) => {
 
 const updateDefense = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['date', 'classroom', 'student', 'tutor', 'candid', 'group']; // Ajout de 'group' aux mises à jour autorisées
+    const allowedUpdates = ['date', 'classroom', 'student', 'tutor', 'candid', 'group'];
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
