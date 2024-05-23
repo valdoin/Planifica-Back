@@ -1,5 +1,5 @@
 const Mongoose = require('mongoose')
-const localDB = 'mongodb://127.0.0.1:27017/Soutenances'
+const localDB = 'mongodb://mongo:27017/Soutenances'
 
 const connectDB = async () => {
     await Mongoose.connect(localDB, {
