@@ -24,6 +24,11 @@ const DefenseSchema = new Mongoose.Schema({
         ref: 'Teacher',
         required: true,
     },
+    group: {
+        type: Mongoose.Schema.Types.ObjectId,
+        ref: "Group",
+        required: true,
+    }
 });
 
 const Defense = Mongoose.model('Defense', DefenseSchema);

@@ -19,7 +19,6 @@ const getAllDefenses = async (req, res) => {
     }
 };
 
-
 const getDefenseById = async (req, res) => {
     try {
         const defense = await Defense.findById(req.params.id).populate('student tutor candid');
@@ -32,10 +31,9 @@ const getDefenseById = async (req, res) => {
     }
 };
 
-
 const updateDefense = async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['date', 'classroom', 'student', 'tutor', 'candid'];
+    const allowedUpdates = ['date', 'classroom', 'student', 'tutor', 'candid', 'group']; // Ajout de 'group' aux mises à jour autorisées
     const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
     if (!isValidOperation) {
